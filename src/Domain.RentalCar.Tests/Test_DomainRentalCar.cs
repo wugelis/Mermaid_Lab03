@@ -22,14 +22,28 @@ namespace Domain.RentalCar.Tests
         [TestMethod]
         [DataRow("test@1234")]
         [DataRow("mypassword@99")]
-        [ExpectedException(typeof(ArgumentException))]
         public void Should_ThrowArgumentException_WhenPasswordHasNoUpperCase(string password)
         {
-            // Arrange & Act
-            var result = Password.Create(password);
+            // Arrange
+            var expectedExceptionMessage = "至少包含一個大寫字母";
+            ArgumentException actualException = null;
 
-            // Assert - 由 ExpectedException 處理
-            // 預期拋出包含 "至少包含一個大寫字母" 訊息的 ArgumentException
+            // Act
+            try
+            {
+                var result = Password.Create(password);
+            }
+            catch (ArgumentException ex)
+            {
+                actualException = ex;
+            }
+
+            // Assert
+            Assert.IsNotNull(actualException, "應該拋出 ArgumentException");
+            Assert.IsTrue(
+                actualException.Message.Contains(expectedExceptionMessage),
+                $"例外訊息應包含 '{expectedExceptionMessage}'，實際訊息為: {actualException.Message}"
+            );
         }
 
         #endregion
@@ -39,14 +53,28 @@ namespace Domain.RentalCar.Tests
         [TestMethod]
         [DataRow("TEST@1234")]
         [DataRow("MYPASSWORD@99")]
-        [ExpectedException(typeof(ArgumentException))]
         public void Should_ThrowArgumentException_WhenPasswordHasNoLowerCase(string password)
         {
-            // Arrange & Act
-            var result = Password.Create(password);
+            // Arrange
+            var expectedExceptionMessage = "至少包含一個小寫字母";
+            ArgumentException actualException = null;
 
-            // Assert - 由 ExpectedException 處理
-            // 預期拋出包含 "至少包含一個小寫字母" 訊息的 ArgumentException
+            // Act
+            try
+            {
+                var result = Password.Create(password);
+            }
+            catch (ArgumentException ex)
+            {
+                actualException = ex;
+            }
+
+            // Assert
+            Assert.IsNotNull(actualException, "應該拋出 ArgumentException");
+            Assert.IsTrue(
+                actualException.Message.Contains(expectedExceptionMessage),
+                $"例外訊息應包含 '{expectedExceptionMessage}'，實際訊息為: {actualException.Message}"
+            );
         }
 
         #endregion
@@ -54,24 +82,32 @@ namespace Domain.RentalCar.Tests
         #region TC-D12: 驗證失敗 - 密碼缺少數字
 
         [TestMethod]
-        [DataRow("Test@Password")]
-        //[DataRow("MyPass@word")]
+        [DataRow("Test2@Password")]
+        [DataRow("MyPass2@word")]
         public void Should_ThrowArgumentException_WhenPasswordHasNoDigit(string password)
         {
             // Arrange
-            var expectedExceptionThrown = false;
-            var expectedMessage = "至少包含一個數字";
-            
+            var expectedExceptionMessage = "至少包含一個數字";
+            ArgumentException actualException = null;
+
+            Password actual = Password.Create(password);
 
             // Act
-            var result = Password.Create(password);
+            try
+            {
+                var result = Password.Create(password);
+            }
+            catch (ArgumentException ex)
+            {
+                actualException = ex;
+            }
 
-            // Assert - 驗證回傳內容是否如預期
-            //Assert.AreEqual(result.Verify);
-
-            // Assert - 驗證是否拋出預期的例外
-            Assert.IsTrue(expectedExceptionThrown,
-                "當密碼缺少數字時，應該拋出 ArgumentException");
+            // Assert
+            Assert.IsNotNull(actualException, "應該拋出 ArgumentException");
+            Assert.IsTrue(
+                actualException.Message.Contains(expectedExceptionMessage),
+                $"例外訊息應包含 '{expectedExceptionMessage}'，實際訊息為: {actualException.Message}"
+            );
         }
 
         #endregion
@@ -81,14 +117,28 @@ namespace Domain.RentalCar.Tests
         [TestMethod]
         [DataRow("Test1234")]
         [DataRow("MyPassword99")]
-        [ExpectedException(typeof(ArgumentException))]
         public void Should_ThrowArgumentException_WhenPasswordHasNoSpecialChar(string password)
         {
-            // Arrange & Act
-            var result = Password.Create(password);
+            // Arrange
+            var expectedExceptionMessage = "至少包含一個特殊字元";
+            ArgumentException actualException = null;
 
-            // Assert - 由 ExpectedException 處理
-            // 預期拋出包含 "至少包含一個特殊字元" 訊息的 ArgumentException
+            // Act
+            try
+            {
+                var result = Password.Create(password);
+            }
+            catch (ArgumentException ex)
+            {
+                actualException = ex;
+            }
+
+            // Assert
+            Assert.IsNotNull(actualException, "應該拋出 ArgumentException");
+            Assert.IsTrue(
+                actualException.Message.Contains(expectedExceptionMessage),
+                $"例外訊息應包含 '{expectedExceptionMessage}'，實際訊息為: {actualException.Message}"
+            );
         }
 
         #endregion
